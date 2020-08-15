@@ -1,30 +1,30 @@
-#DFS goes branch by branch (leftmost to rightmost) and iterates via each node
-#BFS explores level by level
-#add Node to final array and every child node that node has, call DFS and pass final array
-##start with first child node and call DFS then go thru other child nodes
-##call DFS on each child node one by one
-##we have vertices and edges that connect each individual node
-##Time: O(V+E) (V = vertices, E = edges b/c we traverse every vertex and edge to access children nodes using for loop)
-##Space: O(V) (storing array holding V diff nodes as we go deeper, add frames to call stack)
+# Do not edit the class below except
+# for the breadthFirstSearch method.
+# Feel free to add new properties
+#Grab all nodes, put them in array and return it
+# and methods to the class.
+#queue -> FIFO (first added ot queue is first out)
+# start at root node and add it to queue
+#add A node to queue and on top of queue declare currentNode
+#grab pop from queue add it to current, add to final array add all child nodes of A to queue 
+#add name to final array and add all child nodes of A to queue 
+#Time: O(V+E), Space: O(V)
 class Node:
     def __init__(self, name):
-		#name of ROOT node that we are calling
+        self.children = []
         self.name = name
-		#children of node
-		self.children = []
-##add every child to array
-    def addChild(self, name):
-		##append new Node to children array
-        self.children.append(Node(name))
-        
-##array has all node names
-##
-    def depthFirstSearch(self, array):
-		array.append(self.name)
-		for child in self.children:
-##Ex: B is child of A so call B.depthFirstSearch(['A']) and add B child to array
-##call depthfirstSearch on child and add RECURSIVELY to array
-			child.depthFirstSearch(array)
-		return array
 
-        
+    def addChild(self, name):
+        self.children.append(Node(name))
+        return self
+
+    def breadthFirstSearch(self, array):
+		#hold the first node (ROOT), self is node we are caalling BFS on
+        queue = [self]
+		while queue:
+			currentNode = queue.pop(0)
+			array.append(currentNode.name)
+		##add every child of popped node to the queue (ex: if popping 'B', add 'E' and 'F')
+			for children in currentNode.children:
+				queue.append(children)
+        return array
